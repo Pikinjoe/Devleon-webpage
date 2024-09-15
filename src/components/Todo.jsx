@@ -7,28 +7,17 @@ import rightArrow from '../assets/rightArrow.png'
 const Todo = () => {
     const [openTodo, setOpenTodo] = useState(true)
 
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('todo')) || []);
     const [newTask, setNewTask] = useState('')
-    const [completeTasks, setCompleteTasks] = useState([])
-
-    const LOCAL_STORAGE_KEY = 'mytodos';
-    const COMPLETED_TASKS_KEY = 'completedTodos';
-
-    // Load tasks from local storage on component mount
-    useEffect(() => {
-        const storedTasks = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        const storedCompletedTasks = JSON.parse(localStorage.getItem(COMPLETED_TASKS_KEY));
-        if (storedTasks) setTasks(storedTasks);
-        if (storedCompletedTasks) setCompleteTasks(storedCompletedTasks);
-    }, []);
-
+    const [completeTasks, setCompleteTasks] = useState(JSON.parse(localStorage.getItem('completeTodo')) || [])
+   
     // Save tasks to local storage on changes
     useEffect(() => {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks));
+        localStorage.setItem('todo', JSON.stringify(tasks));
     }, [tasks]);
 
     useEffect(() => {
-        localStorage.setItem(COMPLETED_TASKS_KEY, JSON.stringify(completeTasks));
+        localStorage.setItem('completeTodo', JSON.stringify(completeTasks));
     }, [completeTasks]);
 
 
@@ -55,12 +44,16 @@ const Todo = () => {
     function deleteTask(index) {
         setTasks(t => t.filter((_, i) => i !== index))
     } 
+
+    function clearTask() {
+        setCompleteTasks([])
+    }
   return (
     <div>
         <div className='flex justify-center items-center gap-4'>
             <p className='uppercase font-mono text-xl text-cyan-200 tracking-widest'>What are we doing today?</p>
             <input type="text" value={newTask} onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => inputChange(e)} className='bg-transparent border-b-2 outline-none text-cyan-50' />
-            <button onClick={addTask}><img src={arrow} alt="" width={40} /></button>
+            <button onClick={addTask} className='active:translate-x-1'><img src={arrow} alt="" width={40} /></button>
         </div>
 
        <div className='flex justify-center items-center'>
@@ -83,6 +76,7 @@ const Todo = () => {
                         {completeTasks.map((completeTask, i) => <li className='capitalize text-green-900 font-medium text-lg list-decimal ml-5' key={i}>{completeTask}</li>)}
                         
                     </ol>
+                    <button className='font-medium bg-red-400 rounded-full py-2 px-4 text-cyan-50 ' onClick={clearTask}>Clear</button>
                 </div>
 
                 <div>
