@@ -1,7 +1,5 @@
 import { useState, useEffect} from 'react'
 import arrow from '../assets/arrowGreen.png'
-import leftArrow from '../assets/leftArrow.png'
-import rightArrow from '../assets/rightArrow.png'
 
 
 const Todo = () => {
@@ -9,7 +7,7 @@ const Todo = () => {
 
     const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('todo')) || []);
     const [newTask, setNewTask] = useState('')
-    const [completeTasks, setCompleteTasks] = useState(JSON.parse(localStorage.getItem('completeTodo')) || [])
+    const [completeTasks, setCompleteTasks] = useState(JSON.parse(localStorage.getItem('completeTasks')) || [])
    
     // Save tasks to local storage on changes
     useEffect(() => {
@@ -17,7 +15,7 @@ const Todo = () => {
     }, [tasks]);
 
     useEffect(() => {
-        localStorage.setItem('completeTodo', JSON.stringify(completeTasks));
+        localStorage.setItem('completeTasks', JSON.stringify(completeTasks));
     }, [completeTasks]);
 
 
