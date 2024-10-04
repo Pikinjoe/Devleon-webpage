@@ -28,7 +28,7 @@ const Weather = () => {
         const fetchWeather = async () => {
           try {
             // Fetch user location using IP API
-            const locationResponse = await axios.get('https://ip-api.com/json/');
+            const locationResponse = await axios.get('http://ip-api.com/json/');
     
             // Build dynamic weather API URL using location data
             const url = `https://api.openweathermap.org/data/2.5/weather?lat=${locationResponse.data.lat}&lon=${locationResponse.data.lon}&appid=9b14fd1e843a8e05c61d2a814c1d5568&units=metric`;
