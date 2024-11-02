@@ -5,6 +5,7 @@ import arrow from '../assets/arrowGreen.png'
 const Todo = () => {
     const [openTodo, setOpenTodo] = useState(true)
 
+    //Get saved tasks from the use states
     const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('todo')) || []);
     const [newTask, setNewTask] = useState('')
     const [completeTasks, setCompleteTasks] = useState(JSON.parse(localStorage.getItem('completeTasks')) || [])
@@ -74,7 +75,7 @@ const Todo = () => {
                         {completeTasks.map((completeTask, i) => <li className='capitalize text-green-900 font-medium text-lg list-decimal ml-5' key={i}>{completeTask}</li>)}
                         
                     </ol>
-                    <button className='font-medium bg-red-400 rounded-full py-2 px-4 text-cyan-50 ' onClick={clearTask}>Clear</button>
+                    {completeTasks.length >= 1 && <button className='font-medium bg-red-900 rounded-full py-2 px-4 text-cyan-50 ' onClick={clearTask}>Clear</button>}
                 </div>
 
                 <div>
